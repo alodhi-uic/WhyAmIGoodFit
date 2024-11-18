@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Parser</title>
+    <title>Virat Kohli</title>
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <h1>Resume Parser</h1>
+    <h1>Virat Kohli</h1>
     <form id="uploadForm" enctype="multipart/form-data">
-        <label for="file">Upload Resume:</label>
+        <label for="file">Upload:</label>
         <input type="file" id="file" name="file" required />
-        <button type="submit">Upload</button>
-    </form>
+
+
+        <!-- New Textarea for Job Description -->
+        <label for="jobDescription">Paste text:</label>
+        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..." required></textarea>
+        <button type="submit">Upload</button></form>
 
     <!-- Loading Spinner -->
     <div id="spinner" class="spinner"></div>

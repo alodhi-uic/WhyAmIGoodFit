@@ -43,7 +43,7 @@ label {
     font-size: 1.1em;
 }
 
-input[type="file"] {
+input[type="file"], textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -99,4 +99,19 @@ pre {
 
 #response {
     color: #666;
+}
+.response-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
 }
