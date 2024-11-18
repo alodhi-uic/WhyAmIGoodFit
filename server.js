@@ -28,54 +28,55 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
     try {
         // Access the job description from the request body
-        // const jobDescription = req.body.jobDescription;
-        // // console.log('Job Description:', jobDescription); // Print the job description to the console
-        //
-        // const filePath = req.file.path;
-        //
-        // // Upload the file to Google AI
-        // const uploadResponse = await fileManager.uploadFile(filePath, {
-        //     mimeType: req.file.mimetype,
-        //     displayName: req.file.originalname,
-        // });
-        //
-        // // Generate content using the uploaded file and job description
-        // const result = await model.generateContent([
-        //     {
-        //         fileData: {
-        //             mimeType: uploadResponse.file.mimeType,
-        //             fileUri: uploadResponse.file.uri,
-        //         },
-        //     },
-        //     { text: `Can you summarize the content of this resume? and compare information related to the job description: ${req.body.jobDescription}. tell me if i am a good fit for the role or not. If yes the tell me what should i write for the question
-        //     "Tell me why should we hire you?" If no then tell me what should i learn to upskill  myself.
-        //
-        //     I want the response in json format` },
-        // ]);
+        const jobDescription = req.body.jobDescription;
+        // console.log('Job Description:', jobDescription); // Print the job description to the console
 
-        // console.log("EP0:" + result.response.toString() + ":ENDD" );
+        const filePath = req.file.path;
+
+        // Upload the file to Google AI
+        const uploadResponse = await fileManager.uploadFile(filePath, {
+            mimeType: req.file.mimetype,
+            displayName: req.file.originalname,
+        });
+
+        // Generate content using the uploaded file and job description
+        const result = await model.generateContent([
+            {
+                fileData: {
+                    mimeType: uploadResponse.file.mimeType,
+                    fileUri: uploadResponse.file.uri,
+                },
+            },
+            { text: `Can you summarize the content of this resume? and compare information related to the job description: ${req.body.jobDescription}. tell me if i am a good fit for the role or not. If yes the tell me what should i write for the question
+            "Tell me why should we hire you?" If no then tell me what should i learn to upskill  myself.
+
+            I want the response in json format` },
+        ]);
+
+        console.log("EP0:" + result.response.toString() + ":ENDD" );
 
         // Send the generated summary back to the client
+        let rawResponse = result.response.text();
        // console.log("EP1:" + result.response.text() + ":ENDD" );
-        let rawResponse = "```json\n" +
-            "{\n" +
-            "  \"goodFit\": false,\n" +
-            "  \"reason\": \"The resume demonstrates strong software engineering skills, particularly in backend development and experience with various technologies (Java, C++, Python, databases, cloud platforms), which are not directly relevant to the Vermeer Embedded Software Engineer Intern position. The required skills for the Vermeer position emphasize embedded systems, microcontroller architectures, control system theory, and Embedded C programming, areas where the applicant's resume lacks demonstrable experience.\",\n" +
-            "  \"upskillRecommendations\": [\n" +
-            "    \"Embedded C programming\",\n" +
-            "    \"Microcontroller architectures (e.g., ARM Cortex-M)\",\n" +
-            "    \"Real-time operating systems (RTOS)\",\n" +
-            "    \"Control system theory and applications\",\n" +
-            "    \"Schematic reading and understanding of electronic circuits\",\n" +
-            "    \"Experience with embedded system debugging tools and techniques\",\n" +
-            "    \"Familiarity with common embedded hardware (e.g., sensors, actuators)\",\n" +
-            "    \"Hands-on experience with test equipment (e.g., oscilloscopes, signal generators, power supplies)\"\n" +
-            "  ],\n" +
-            "  \"tellMeWhyShouldWeHireYouResponse\": \"While my resume showcases expertise in software development, it currently lacks the specific embedded systems experience required for this role.  However, I am a highly motivated and quick learner with a strong foundation in programming and software development principles. I am eager to develop my skills in embedded systems and quickly acquire the necessary expertise to make a significant contribution to your team. I am confident that my ability to rapidly learn new technologies and my strong problem-solving skills would enable me to quickly adapt and excel in this position.  I'm committed to dedicating the time and effort to learn Embedded C programming and the other required skills, and I am confident I can become a valuable asset to your team.\"\n" +
-            "}\n" +
-            "```";
-       //  let cleanResponse = rawResponse.replace("``` json", '').trim();
-       //  cleanResponse = cleanResponse.replace("```", '').trim();
+       //  let rawResponse = "```json\n" +
+       //      "{\n" +
+       //      "  \"goodFit\": false,\n" +
+       //      "  \"reason\": \"The resume demonstrates strong software engineering skills, particularly in backend development and experience with various technologies (Java, C++, Python, databases, cloud platforms), which are not directly relevant to the Vermeer Embedded Software Engineer Intern position. The required skills for the Vermeer position emphasize embedded systems, microcontroller architectures, control system theory, and Embedded C programming, areas where the applicant's resume lacks demonstrable experience.\",\n" +
+       //      "  \"upskillRecommendations\": [\n" +
+       //      "    \"Embedded C programming\",\n" +
+       //      "    \"Microcontroller architectures (e.g., ARM Cortex-M)\",\n" +
+       //      "    \"Real-time operating systems (RTOS)\",\n" +
+       //      "    \"Control system theory and applications\",\n" +
+       //      "    \"Schematic reading and understanding of electronic circuits\",\n" +
+       //      "    \"Experience with embedded system debugging tools and techniques\",\n" +
+       //      "    \"Familiarity with common embedded hardware (e.g., sensors, actuators)\",\n" +
+       //      "    \"Hands-on experience with test equipment (e.g., oscilloscopes, signal generators, power supplies)\"\n" +
+       //      "  ],\n" +
+       //      "  \"tellMeWhyShouldWeHireYouResponse\": \"While my resume showcases expertise in software development, it currently lacks the specific embedded systems experience required for this role.  However, I am a highly motivated and quick learner with a strong foundation in programming and software development principles. I am eager to develop my skills in embedded systems and quickly acquire the necessary expertise to make a significant contribution to your team. I am confident that my ability to rapidly learn new technologies and my strong problem-solving skills would enable me to quickly adapt and excel in this position.  I'm committed to dedicating the time and effort to learn Embedded C programming and the other required skills, and I am confident I can become a valuable asset to your team.\"\n" +
+       //      "}\n" +
+       //      "```";
+        // let cleanResponse = rawResponse.replace("``` json", '').trim();
+        // cleanResponse = cleanResponse.replace("```", '').trim();
        //
        //  console.log("cleanResponse: " + cleanResponse  + " :arcane");
 
@@ -94,8 +95,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 //         }
 // console.log(parsedResponse);
         // Send the parsed JSON summary back to the client
-        console.log("cleanResponse: " + cleanResponse);
-        res.json(cleanResponse);
+        // console.log(cleanResponse);
+        console.log("ENDD cleanResponse");
+        let parsedResponse = JSON.parse(cleanResponse.toString());
+        // cleanResponse = { "goodFit": false, "reason": "Based ", "tellMeWhyToHireYou": "While team." };
+        res.json(parsedResponse);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: 'Failed to process the file and job description' });
