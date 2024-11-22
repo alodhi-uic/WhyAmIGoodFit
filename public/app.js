@@ -44,12 +44,13 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 // Clear the existing content
         responseBox.innerHTML = '';
 
+        let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
 // Create individual boxes for each key
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 // Create a new div for each key-value pair
                 const box = document.createElement("div");
-                box.className = "response-item"; // Add a class for styling if needed
+                box.className = "response-box"; // Add a class for styling if needed
 
                 // Set the content to display the key and value
                 box.innerHTML = `<strong>${key}:</strong> ${data[key]}`;
@@ -57,8 +58,15 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
                 // Append each box to the responseBox
                 responseBox.appendChild(box);
             }
-        }
 
+
+
+        }
+        const box = document.createElement("div");
+        box.className = "response-box";
+        summary = await generateSummary(newContent);
+        box.innerHTML = `Summaraaaaay: ${summary}`;
+        responseBox.appendChild(box);
         // Loop through JSON keys and display each key-value pair in a box if present
         // Object.keys(data).forEach(key => {
         //     if (data[key] !== null && data[key] !== undefined) { // Check if the value is present
@@ -75,3 +83,49 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         console.error("Error:", error);
     }
 });
+
+
+async function createSummarizer(config, downloadProgressCallback) {
+    if (!window.ai || !window.ai.summarizer) {
+        throw new Error('AI Summarization is not supported in this browser');
+    }
+    const canSummarize = await window.ai.summarizer.capabilities();
+    if (canSummarize.available === 'no') {
+        throw new Error('AI Summarization is not supported');
+    }
+    const summarizationSession = await self.ai.summarizer.create(
+        config,
+        downloadProgressCallback
+    );
+    if (canSummarize.available === 'after-download') {
+        summarizationSession.addEventListener(
+            'downloadprogress',
+            downloadProgressCallback
+        );
+        await summarizationSession.ready;
+    }
+    return summarizationSession;
+}
+
+async function generateSummary(text) {
+    try {
+        const session = await createSummarizer(
+            {
+                type: "key-points",
+                format: "markdown",
+                length: "medium"
+            },
+            (message, progress) => {
+                console.log(`${message} (${progress.loaded}/${progress.total})`);
+            }
+        );
+        const summary = await session.summarize(text);
+        console.log(summary);
+        session.destroy();
+        return summary;
+    } catch (e) {
+        console.log('Summary generation failed');
+        console.error(e);
+        return 'Error: ' + e.message;
+    }
+}
