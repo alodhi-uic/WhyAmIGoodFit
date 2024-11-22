@@ -1,0 +1,20 @@
+{
+  "isGoodFit": {
+    "type": "boolean"
+  },
+  "summary": {
+    "type": "string"
+  },
+  "comparison": {
+    "type": "string"
+  },
+  "tellMeWhyHireYou": {
+    "type": "string"
+  },
+  "upskill": {
+    "type": [
+      "string",
+      "null"
+    ]
+  }
+}
