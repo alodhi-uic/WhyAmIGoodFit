@@ -9,23 +9,24 @@
 </head>
 <body>
 <div class="container">
-    <!-- Initial Content -->
     <h1>Virat Kohli</h1>
     <form id="uploadForm" enctype="multipart/form-data">
         <label for="file">Upload:</label>
         <input type="file" id="file" name="file" required />
 
-        <!-- Textarea for Job Description -->
+
+        <!-- New Textarea for Job Description -->
         <label for="jobDescription">Paste text:</label>
         <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..." required></textarea>
-
-        <button type="submit">Upload</button>
-    </form>
+        <button type="submit">Upload</button></form>
 
     <!-- Loading Spinner -->
     <div id="spinner" class="spinner"></div>
 
-    <!-- Dynamic Content will replace this after upload -->
+    <!-- Response will be shown here -->
+    <div id="responseBox" class="response-box">
+        <pre id="response"></pre>
+    </div>
 </div>
 
 <!-- Link to the external JavaScript file -->
