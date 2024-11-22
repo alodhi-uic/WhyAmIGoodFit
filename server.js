@@ -12,7 +12,7 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the "public" folder
+// Serve static files from the "public-old" folder
 app.use(express.static('public'));
 import cors from 'cors';
 app.use(cors());
