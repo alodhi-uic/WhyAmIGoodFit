@@ -15,21 +15,29 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Grid container styling */
+
 .box-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    grid-auto-rows: auto;
+    text-align: center;
     gap: 16px;
     padding: 16px;
     max-width: 800px;
     margin: 0 auto;
 }
-
-/* Styling for the first key-value pair (spans both columns) */
-.box-container .expanded {
-    grid-column: 1 / -1; /* Span across both columns */
+.key1Container {
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
+.keyRestTopContainer{
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+
 
 /* Box wrapper for alignment */
 .box-wrapper {

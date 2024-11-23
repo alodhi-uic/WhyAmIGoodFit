@@ -1,3 +1,20 @@
+function addColumnBox(key, value) {
+    const keyRestWrapper = document.createElement('div');
+    keyRestWrapper.className = 'keyWrapper';
+
+    const keyRestContainer = document.createElement('div');
+    keyRestContainer.className = 'keyRestContainer';
+    keyRestContainer.textContent = key;
+
+    const box2 = document.createElement('div');
+    box2.className = 'box';
+    box2.textContent = value;
+
+    keyRestWrapper.appendChild(keyRestContainer);
+    keyRestWrapper.appendChild(box2);
+    return keyRestWrapper;
+}
+
 document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -8,78 +25,110 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     // Show the spinner while waiting for the response
     spinner.style.display = 'block';
 
+
     const formData = new FormData();
     formData.append("file", document.getElementById("file").files[0]);
     formData.append("jobDescription", document.getElementById("jobDescription").value);
 
     try {
-        // Simulating backend response
-        const res = {
-            json: async () => ({
-                key1: "This is the expanded box content for key1",
-                key2: "Value for key 2",
-                key3: "Value for key 3",
-                key4: "Value for key 4",
-                key5: "Value for key 5",
-                key6: "Value for key 6",
-                key7: "Value for key 7",
-                key8: "Value for key 8",
-                key9: "Value for key 9",
-                key10: "Value for key 10",
-            }),
-        };
-
+        const res = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
         const data = await res.json();
 
-        // Hide the spinner
-        spinner.style.display = 'none';
-
-        // Clear the existing container content
-        container.innerHTML = '<h1>Backend Response</h1>';
-
-        // Create a box container
+        //mansi's code
         const boxContainer = document.createElement('div');
         boxContainer.className = 'box-container';
+        // console.log(data, "data");
 
-        // Add key-value pairs to the grid
+
+        const key1Container = document.createElement('div');
+        key1Container.className = 'key1Container';
+
+        const box1 = document.createElement('div');
+        box1.className = 'box';
+
+        const key1Wrapper = document.createElement('div');
+        key1Wrapper.className = 'keyWrapper';
+        key1Wrapper.appendChild(key1Container);
+        key1Wrapper.appendChild(box1);
+        boxContainer.appendChild(key1Wrapper);
+
+
+        const keyRestTopContainer = document.createElement('div');
+        keyRestTopContainer.className = 'keyRestTopContainer';
+        boxContainer.appendChild(keyRestTopContainer);
+
         Object.entries(data).forEach(([key, value], index) => {
-            const boxWrapper = document.createElement('div');
-            boxWrapper.className = 'box-wrapper';
-
-            // Add key label
-            const keyLabel = document.createElement('div');
-            keyLabel.className = 'key-label';
-            keyLabel.textContent = key;
-
-            // Create the box for the value
-            const box = document.createElement('div');
-            box.className = 'box';
-
-            // Special case for key1 (spanning full width)
-            if (index === 0) {
-                box.classList.add('expanded');
-                box.textContent = value;
-
-                boxWrapper.appendChild(keyLabel);
-                boxWrapper.appendChild(box);
-                boxContainer.appendChild(boxWrapper);
+            if (key === "isGoodFit") {
+                key1Container.textContent = key;
+                box1.textContent = value;
             } else {
-                box.textContent = value;
 
-                // Add key label and value box to wrapper
-                boxWrapper.appendChild(keyLabel);
-                boxWrapper.appendChild(box);
-
-                // Append to the container
-                boxContainer.appendChild(boxWrapper);
+                const keyRestWrapper = addColumnBox(key, value);
+                keyRestTopContainer.appendChild(keyRestWrapper);
             }
         });
+        let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
+        summary = await generateSummary(newContent);
+        const keyRestWrapper = addColumnBox("key", summary);
+        keyRestTopContainer.appendChild(keyRestWrapper);
+        //end of mansi's code
 
         // Append the box container to the main container
         container.appendChild(boxContainer);
+
     } catch (error) {
         spinner.style.display = 'none';
         console.error("Error:", error);
         container.innerHTML = '<p>An error occurred. Please try again later.</p>';
     }
+
+    spinner.style.display = 'none';
 });
+
+async function createSummarizer(config, downloadProgressCallback) {
+    if (!window.ai || !window.ai.summarizer) {
+        throw new Error('AI Summarization is not supported in this browser');
+    }
+    const canSummarize = await window.ai.summarizer.capabilities();
+    if (canSummarize.available === 'no') {
+        throw new Error('AI Summarization is not supported');
+    }
+    const summarizationSession = await self.ai.summarizer.create(
+        config,
+        downloadProgressCallback
+    );
+    if (canSummarize.available === 'after-download') {
+        summarizationSession.addEventListener(
+            'downloadprogress',
+            downloadProgressCallback
+        );
+        await summarizationSession.ready;
+    }
+    return summarizationSession;
+}
+
+async function generateSummary(text) {
+    try {
+        const session = await createSummarizer(
+            {
+                type: "key-points",
+                format: "markdown",
+                length: "medium"
+            },
+            (message, progress) => {
+                console.log(`${message} (${progress.loaded}/${progress.total})`);
+            }
+        );
+        const summary = await session.summarize(text);
+        console.log(summary);
+        session.destroy();
+        return summary;
+    } catch (e) {
+        console.log('Summary generation failed');
+        console.error(e);
+        return 'Error: ' + e.message;
+    }
+}
