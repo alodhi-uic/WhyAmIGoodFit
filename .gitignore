@@ -3,4 +3,4 @@ node_modules
 .gitignore
 .idea
 .DS_Store
-uploads
+Temp/uploads
