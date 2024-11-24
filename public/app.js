@@ -1,3 +1,22 @@
+function addRowBox(key, value) {
+    const keyRestWrapper = document.createElement('div');
+    keyRestWrapper.className = 'keyWrapper';
+
+    const rowBoxContainer = document.createElement('div');
+    rowBoxContainer.className = 'key1Container';
+    rowBoxContainer.textContent = key;
+
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.textContent = value;
+
+
+    keyRestWrapper.appendChild(rowBoxContainer);
+
+    keyRestWrapper.appendChild(box);
+    return keyRestWrapper;
+}
+
 function addColumnBox(key, value) {
     const keyRestWrapper = document.createElement('div');
     keyRestWrapper.className = 'keyWrapper';
@@ -64,16 +83,18 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             if (key === "isGoodFit") {
                 key1Container.textContent = key;
                 box1.textContent = value;
+                //
+                // const keyWrapper = addRowBox(key,value);
+                // boxContainer.appendChild(keyWrapper);
             } else {
-
                 const keyRestWrapper = addColumnBox(key, value);
                 keyRestTopContainer.appendChild(keyRestWrapper);
             }
         });
         let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
         summary = await generateSummary(newContent);
-        const keyRestWrapper = addColumnBox("key", summary);
-        keyRestTopContainer.appendChild(keyRestWrapper);
+        const keyRestWrapper = addRowBox("key", summary);
+        boxContainer.appendChild(keyRestWrapper);
         //end of mansi's code
 
         // Append the box container to the main container

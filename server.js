@@ -70,16 +70,16 @@ app.post('/upload', upload.single('file'), async (req, res) => {
             mimeType: req.file.mimetype,
             displayName: req.file.originalname,
         });
-        const result = await model.generateContent([
-            {
-                fileData: {
-                    mimeType: uploadResponse.file.mimeType,
-                    fileUri: uploadResponse.file.uri,
-                },
-            },
-            { text: `Can you summarize the content of this resume? and compare information related to the job description: ${req.body.jobDescription}. tell me if i am a good fit for the role or not. If yes the tell me what should i write for the question
-            "Tell me why should we hire you?" If no then tell me what should i learn to upskill  myself.` },
-        ]);
+        // const result = await model.generateContent([
+        //     {
+        //         fileData: {
+        //             mimeType: uploadResponse.file.mimeType,
+        //             fileUri: uploadResponse.file.uri,
+        //         },
+        //     },
+        //     { text: `Can you summarize the content of this resume? and compare information related to the job description: ${req.body.jobDescription}. tell me if i am a good fit for the role or not. If yes the tell me what should i write for the question
+        //     "Tell me why should we hire you?" If no then tell me what should i learn to upskill  myself.` },
+        // ]);
 
         // const resultText = await result.response.text();
         // console.log("ARaaaaT: "+ resultText + ":ENaaaaD");
