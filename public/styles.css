@@ -86,3 +86,32 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.hidden {
+    display: none;
+}
+
+/* Dropdown Section Styling */
+.dropdown-section {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.dropdown-section select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+#regenerateButton {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#regenerateButton img {
+    width: 24px;
+    height: 24px;
+}

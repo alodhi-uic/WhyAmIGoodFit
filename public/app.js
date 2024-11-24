@@ -33,12 +33,13 @@ function addColumnBox(key, value) {
     keyRestWrapper.appendChild(box2);
     return keyRestWrapper;
 }
-
+let data;
 document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Get required elements
     const spinner = document.getElementById('spinner');
+    const gemini = document.querySelector('.gemini');
     const container = document.querySelector('.container');
 
     // Show the spinner while waiting for the response
@@ -54,7 +55,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             method: 'POST',
             body: formData
         });
-        const data = await res.json();
+        data = await res.json();
 
         //mansi's code
         const boxContainer = document.createElement('div');
@@ -91,23 +92,45 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
                 keyRestTopContainer.appendChild(keyRestWrapper);
             }
         });
-        let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
-        summary = await generateSummary(newContent);
-        const keyRestWrapper = addRowBox("key", summary);
-        boxContainer.appendChild(keyRestWrapper);
+        // let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
+        // summary = await generateSummary(newContent);
+        // const keyRestWrapper = addRowBox("key", summary);
+        // boxContainer.appendChild(keyRestWrapper);
         //end of mansi's code
 
         // Append the box container to the main container
-        container.appendChild(boxContainer);
+        gemini.appendChild(boxContainer);
+        container.appendChild(gemini)
 
     } catch (error) {
         spinner.style.display = 'none';
         console.error("Error:", error);
-        container.innerHTML = '<p>An error occurred. Please try again later.</p>';
+        gemini.innerHTML = '<p>An error occurred. Please try again later.</p>';
     }
+    tempF();
 
-    spinner.style.display = 'none';
+
+
 });
+
+async function tempF(){
+    const summary = document.querySelector('.summary');
+    const container = document.querySelector('.container');
+    const spinner = document.getElementById('spinner');
+    // const container = document.querySelector('.container');
+    let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
+    const summaryx = await generateSummary(newContent);
+    const keyRestWrapper = addRowBox("key", summaryx);
+    console.log("aaasss"+container.children.length);
+    // const secondLastChild = container.children[container.children.length - 2];
+    // // Remove the second last child
+    // secondLastChild.remove();
+    summary.appendChild(keyRestWrapper)
+    container.appendChild(summary);
+    const dropdownSection = document.getElementById('dropdownSection');
+    dropdownSection.style.display = 'flex';
+    spinner.style.display = 'none';
+}
 
 async function createSummarizer(config, downloadProgressCallback) {
     if (!window.ai || !window.ai.summarizer) {
@@ -153,3 +176,51 @@ async function generateSummary(text) {
         return 'Error: ' + e.message;
     }
 }
+
+document.getElementById('regenerateButton').addEventListener('click', async () => {
+    // Get selected dropdown values
+    const dropdown1 = document.getElementById('dropdown1').value;
+    const dropdown2 = document.getElementById('dropdown2').value;
+    const dropdown3 = document.getElementById('dropdown3').value;
+    const container = document.querySelector('.container');
+    let newContent = "To strengthen your candidacy, focus on gaining experience with real-time systems and high-traffic applications. Consider projects or coursework involving technologies like WebSockets, streaming data processing (e.g., Kafka, Apache Pulsar), and distributed systems architecture. Prioritize enhancing your proficiency in Python, Java, or Scala to better align with X's technology stack. Look for opportunities to showcase your expertise in building features for large-scale, user-facing platforms. Adding projects that demonstrate your understanding of scalability, fault tolerance, and real-time data handling will further enhance your application.";
+    const summary = await generateSummary(newContent);
+    const keyRestWrapper = addRowBox("key", summary);
+    console.log("aaasss"+container.children.length);
+    const secondLastChild = container.children[container.children.length - 1];
+    // Remove the second last child
+    secondLastChild.remove();
+    container.appendChild(keyRestWrapper);
+
+
+    // Ensure at least one dropdown has a value
+    // if (!dropdown1 && !dropdown2 && !dropdown3) {
+    //     alert("Please select at least one option.");
+    //     return;
+    // }
+
+    // spinner.style.display = 'block'; // Show spinner
+
+    // try {
+    //     // Call backend API for regenerating summary
+    //     // const res = await fetch('/regenerate-summary', {
+    //     //     method: 'POST',
+    //     //     headers: { 'Content-Type': 'application/json' },
+    //     //     body: JSON.stringify({ dropdown1, dropdown2, dropdown3 }),
+    //     // });
+    //     // const data = await res.json();
+    //     //
+    //     // // Remove spinner and update the UI with the new summary
+    //     // spinner.style.display = 'none';
+    //
+    //     // Dynamically display the new summary
+    //     const summaryBox = addRowBox("Summary", "data.summary");
+    //     // container.clear;
+    //     summaryContainer.innerHTML(summaryBox);
+    // } catch (error) {
+    //     console.error("Error:", error);
+    //     spinner.style.display = 'none';
+    //     alert("Failed to regenerate summary. Please try again.");
+    // }
+});
+
