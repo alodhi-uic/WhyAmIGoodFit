@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virat Kohli</title>
+    <title>Why Am I A Good Fit?</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <h1>Virat Kohli</h1>
+    <h1>Why Am I A Good Fit?</h1>
     <form id="jobForm">
         <label for="jobDescription"></label>
         <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..."
@@ -16,7 +16,7 @@
         <button id="jdUploadButton" type="submit">Upload</button>
     </form>
     <div id="spinner" class="spinner"></div>
-    <div id="output"></div>
+    <div id="summaryOutput"></div>
     <div id="dropdownSection" class="dropdown-section hidden">
         <label for="type">Summary Type:</label>
         <select id="type">
@@ -40,7 +40,7 @@
         </select>
 
         <button id="regenerateButton">
-            <img src="regenerate-icon.png" alt="Regenerate"/>
+            <img src="rotate.png" class="small-icon" alt="Regenerate"/>
         </button>
     </div>
     <form id="resumeUploadForm" enctype="multipart/form-data" hidden="hidden">
@@ -49,8 +49,8 @@
         <button id="resumeSubmitButton" type="submit" >Upload</button>
     </form>
 
-    <div id="gemini" class="gemini"></div>
-    <div id="prompt-summary" class="prompt-summary"></div>
+    <div id="gemini" class="gemini" hidden="hidden"></div>
+    <div id="prompt-summary" class="prompt-summary" hidden="hidden"></div>
     <form id="rewriteForm" class="rewriteForm" hidden="hidden">
         <fieldset>
             <legend>Rewrite:</legend>

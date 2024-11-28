@@ -6,7 +6,7 @@ const spinnerGlobal = document.getElementById('spinner');
 const dropdownSection = document.getElementById('dropdownSection');
 const jobDescription = document.querySelector('#jobDescription');
 const jdUploadButton = document.getElementById('jdUploadButton');
-const outputBox = document.getElementById('output');
+const summaryOutputBox = document.getElementById('summaryOutput');
 const resumeUploadForm = document.getElementById('resumeUploadForm');
 const promptSummary = document.getElementById('prompt-summary');
 
@@ -50,7 +50,7 @@ document.getElementById('jobForm').addEventListener('submit', async (e) => {
     spinnerGlobal.style.display = 'block';
     console.log("job description added for summerization");
     // Simulate calling an external function
-    outputBox.textContent = await generateSummary(jobDescription.value);
+    summaryOutputBox.textContent = await generateSummary(jobDescription.value);
     jdUploadButton.style.display = 'none';
     dropdownSection.style.display = 'block';
     spinnerGlobal.style.display = 'none';
@@ -61,7 +61,7 @@ document.getElementById('regenerateButton').addEventListener('click', async () =
     spinnerGlobal.style.display = 'block';
     console.log("job description uploaded for regeneration");
     // console.log("JJDDD:" + jobDescription.value);
-    outputBox.textContent = await generateSummary(jobDescription.value);
+    summaryOutputBox.textContent = await generateSummary(jobDescription.value);
     dropdownSection.style.display = 'block';
     resumeUploadForm.style.display = 'block';
     spinnerGlobal.style.display = 'none';
