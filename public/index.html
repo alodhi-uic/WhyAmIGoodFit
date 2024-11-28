@@ -3,32 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virat Kohli</title>
-    <!-- Link to the external CSS file -->
+    <title>Why Am I A Good Fit?</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <!-- Initial Content -->
-    <h1>Virat Kohli</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <label for="file">Upload:</label>
-        <input type="file" id="file" name="file" required />
+    <h1>Why Am I A Good Fit?</h1>
+    <form id="jobForm">
+        <label for="jobDescription"></label>
+        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..."
+                  required></textarea>
+        <button id="jdUploadButton" type="submit">Upload</button>
+    </form>
+    <div id="spinner" class="spinner"></div>
+    <div id="summaryOutput"></div>
+    <div id="dropdownSection" class="dropdown-section hidden">
+        <label for="type">Summary Type:</label>
+        <select id="type">
+            <option value="key-points" selected>Key Points</option>
+            <option value="tl;dr">TL;DR</option>
+            <option value="teaser">Teaser</option>
+            <option value="headline">Headline</option>
+        </select>
 
-        <!-- Textarea for Job Description -->
-        <label for="jobDescription">Paste text:</label>
-        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..." required></textarea>
+        <label for="length">Length:</label>
+        <select id="length">
+            <option value="short" selected>Short</option>
+            <option value="medium">Medium</option>
+            <option value="long">Long</option>
+        </select>
 
-        <button type="submit">Upload</button>
+        <label for="format">Format:</label>
+        <select id="format">
+            <option value="markdown" selected>Markdown</option>
+            <option value="plain-text">Plain text</option>
+        </select>
+
+        <button id="regenerateButton">
+            <img src="rotate.png" class="small-icon" alt="Regenerate"/>
+        </button>
+    </div>
+    <form id="resumeUploadForm" enctype="multipart/form-data" hidden="hidden">
+        <label for="file" >Upload Your Resume:</label>
+        <input type="file" id="file" name="file" />
+        <button id="resumeSubmitButton" type="submit" >Upload</button>
     </form>
 
-    <!-- Loading Spinner -->
-    <div id="spinner" class="spinner"></div>
+    <div id="gemini" class="gemini" hidden="hidden"></div>
+    <div id="prompt-summary" class="prompt-summary" hidden="hidden"></div>
+    <form id="rewriteForm" class="rewriteForm" hidden="hidden">
+        <fieldset>
+            <legend>Rewrite:</legend>
+            <div class="wrapper">
+                <label
+                >Do you want to add some more things in the answer? Type here.
+                    <input type="text" id="prompt" placeholder="Add new details that are missing from your resume">
+                </label>
+                <label
+                >Rewrite tone:
+                    <select id="rewrite-tone">
+                        <option selected value="as-is">As is</option>
+                        <option value="more-formal">More formal</option>
+                        <option value="more-casual">More casual</option>
+                    </select>
+                </label>
+                <label
+                >Rewrite format:
+                    <select id="rewrite-format">
+                        <option selected value="as-is">As is</option>
+                        <option value="plain-text">Plain text</option>
+                        <option value="markdown">Markdown</option>
+                    </select>
+                </label>
+                <label
+                >Rewrite length:
+                    <select id="rewrite-length">
+                        <option selected value="as-is">As is</option>
+                        <option value="shorter">Shorter</option>
+                        <option value="longer">Longer</option>
+                    </select>
+                </label>
+                <button id="rewriteFormButton" type="submit">♻️ Rewrite</button>
+            </div>
+        </fieldset>
+    </form>
 
-    <!-- Dynamic Content will replace this after upload -->
+
 </div>
-
-<!-- Link to the external JavaScript file -->
-<script src="app.js"></script>
+<script type="module"  src="app.js"></script>
 </body>
 </html>
