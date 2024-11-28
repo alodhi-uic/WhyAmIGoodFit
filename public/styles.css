@@ -31,8 +31,8 @@
 }
 .keyRestTopContainer{
     text-align: center;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 1fr);*/
     gap: 16px;
     padding: 16px;
 }

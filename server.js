@@ -35,6 +35,7 @@ const schema = {
             description: "comparing the resume and job description",
             nullable: false,
         },
+        // promptSummary
         tellMeWhyHireYou: {
             type: SchemaType.STRING,
             description: "gemini will tell us why should the company hire you",

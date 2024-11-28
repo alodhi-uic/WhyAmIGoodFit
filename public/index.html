@@ -9,56 +9,91 @@
 </head>
 <body>
 <div class="container">
-    <!-- Initial Content -->
     <h1>Virat Kohli</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <label for="file">Upload:</label>
-        <input type="file" id="file" name="file" required />
+    <form id="jobForm">
+        <label for="jobDescription"></label>
+        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..."
+                  required></textarea>
+        <button id="jdUploadButton" type="submit">Upload</button>
+    </form>
+    <div id="spinner" class="spinner"></div>
+    <div id="output"></div>
+    <div id="dropdownSection" class="dropdown-section hidden">
+        <label for="type">Summary Type:</label>
+        <select id="type">
+            <option value="key-points" selected>Key Points</option>
+            <option value="tl;dr">TL;DR</option>
+            <option value="teaser">Teaser</option>
+            <option value="headline">Headline</option>
+        </select>
 
-        <!-- Textarea for Job Description -->
-        <label for="jobDescription">Paste text:</label>
-        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..." required></textarea>
+        <label for="length">Length:</label>
+        <select id="length">
+            <option value="short" selected>Short</option>
+            <option value="medium">Medium</option>
+            <option value="long">Long</option>
+        </select>
 
-        <button type="submit">Upload</button>
+        <label for="format">Format:</label>
+        <select id="format">
+            <option value="markdown" selected>Markdown</option>
+            <option value="plain-text">Plain text</option>
+        </select>
+
+        <button id="regenerateButton">
+            <img src="regenerate-icon.png" alt="Regenerate"/>
+        </button>
+    </div>
+    <form id="resumeUploadForm" enctype="multipart/form-data" hidden="hidden">
+        <label for="file" >Upload Your Resume:</label>
+        <input type="file" id="file" name="file" />
+        <button id="resumeSubmitButton" type="submit" >Upload</button>
+    </form>
+
+    <!-- Loading Spinner -->
+<!--    <div id="spinner" class="spinner"></div>-->
+    <div id="gemini" class="gemini"></div>
+<!--    <div id="summary" class="summary"></div>-->
+    <div id="prompt-summary" class="prompt-summary"></div>
+    <form id="rewriteForm" class="rewriteForm" hidden="hidden">
+        <fieldset>
+            <legend>Rewrite:</legend>
+            <div class="wrapper">
+                <label
+                >Text input:
+                    <input type="text" id="prompt" placeholder="Enter your text here">
+                </label>
+                <label
+                >Rewrite tone:
+                    <select id="rewrite-tone">
+                        <option selected value="as-is">As is</option>
+                        <option value="more-formal">More formal</option>
+                        <option value="more-casual">More casual</option>
+                    </select>
+                </label>
+                <label
+                >Rewrite format:
+                    <select id="rewrite-format">
+                        <option selected value="as-is">As is</option>
+                        <option value="plain-text">Plain text</option>
+                        <option value="markdown">Markdown</option>
+                    </select>
+                </label>
+                <label
+                >Rewrite length:
+                    <select id="rewrite-length">
+                        <option selected value="as-is">As is</option>
+                        <option value="shorter">Shorter</option>
+                        <option value="longer">Longer</option>
+                    </select>
+                </label>
+                <button id="rewriteFormButton" type="submit">♻️ Rewrite</button>
+            </div>
+        </fieldset>
     </form>
 
 
-    <!-- Loading Spinner -->
-    <div id="spinner" class="spinner"></div>
-    <div id="gemini" class="gemini"></div>
-    <div id="summary" class="summary">
-<!--        <div id="summary" class="summery"></div>-->
-        <div id="dropdownSection" class="dropdown-section hidden">
-            <select id="dropdown1">
-                <option value="">Select Option 1</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-            </select>
-
-            <select id="dropdown2">
-                <option value="">Select Option 2</option>
-                <option value="optionA">Option A</option>
-                <option value="optionB">Option B</option>
-            </select>
-
-            <select id="dropdown3">
-                <option value="">Select Option 3</option>
-                <option value="choice1">Choice 1</option>
-                <option value="choice2">Choice 2</option>
-            </select>
-
-            <button id="regenerateButton">
-                <img src="regenerate-icon.png" alt="Regenerate" />
-            </button>
-        </div>
-    </div>
-
-
-
-    <!-- Dynamic Content will replace this after upload -->
 </div>
-
-<!-- Link to the external JavaScript file -->
-<script src="app.js"></script>
+<script type="module"  src="app.js"></script>
 </body>
 </html>
