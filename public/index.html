@@ -11,7 +11,7 @@
     <h1>Why Am I A Good Fit?</h1>
     <form id="jobForm">
         <label for="jobDescription"></label>
-        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the text here..."
+        <textarea id="jobDescription" name="jobDescription" rows="6" placeholder="Paste the job description here..."
                   required></textarea>
         <button id="jdUploadButton" type="submit">Upload</button>
     </form>
@@ -48,7 +48,7 @@
         <input type="file" id="file" name="file" />
         <button id="resumeSubmitButton" type="submit" >Upload</button>
     </form>
-
+    <div id="spinner2" class="spinner"></div>
     <div id="gemini" class="gemini" hidden="hidden"></div>
     <div id="prompt-summary" class="prompt-summary" hidden="hidden"></div>
     <form id="rewriteForm" class="rewriteForm" hidden="hidden">
@@ -56,8 +56,8 @@
             <legend>Rewrite:</legend>
             <div class="wrapper">
                 <label
-                >Do you want to add some more things in the answer? Type here.
-                    <input type="text" id="prompt" placeholder="Add new details that are missing from your resume">
+                >Do you want to add some more things in the answer?.
+                    <input type="text" id="prompt" class="prompt-box" placeholder="Add new details that are missing from your resume">
                 </label>
                 <label
                 >Rewrite tone:
@@ -83,7 +83,7 @@
                         <option value="longer">Longer</option>
                     </select>
                 </label>
-                <button id="rewriteFormButton" type="submit">♻️ Rewrite</button>
+                <button id="rewriteFormButton" type="submit">✍🏻 Rewrite</button>
             </div>
         </fieldset>
     </form>

@@ -3,6 +3,7 @@ import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.
 
 
 const spinnerGlobal = document.getElementById('spinner');
+const spinnerGlobal2 = document.getElementById('spinner2');
 const dropdownSection = document.getElementById('dropdownSection');
 const jobDescription = document.querySelector('#jobDescription');
 const jdUploadButton = document.getElementById('jdUploadButton');
@@ -18,15 +19,20 @@ const reWriteFormFormatSelect = document.querySelector('#rewrite-format');
 const reWriteFormLengthSelect = document.querySelector('#rewrite-length');
 const reWriteFormPrompt = document.querySelector('#prompt');
 const session = await ai.languageModel.create({
-    systemPrompt: `You are a friendly, helpful assistant specialized technical writing.  Rewrite tone should be ${reWriteFormToneSelect.value}, format should be ${reWriteFormFormatSelect.value} and length should be ${reWriteFormLengthSelect.value}`
+    systemPrompt: `You are a friendly, helpful assistant specialized technical writing.`
 });
 document.getElementById('rewriteFormButton').addEventListener('click', async (event) => {
     // spinnerGlobal.style.display = 'block';
     event.preventDefault()
     let originalQnswer = promptSummary.textContent ? promptSummary.textContent:data.tellMeWhyHireYou;
     console.log("originalQnswer:::" + originalQnswer);
-let fullPrompt = `Can you rewrite this. ${originalQnswer}. Can you also include these details that i forgot to add in my resume too:${reWriteFormPrompt.value}.`;
+    // let fullPrompt = `Can you rewrite this. ${originalQnswer}. Can you also include these details that i forgot to add in my resume too:${reWriteFormPrompt.value}.`;
     // console.log("fullPrompt:::" + fullPrompt);
+    let fullPrompt = `Can you rewrite this. ${originalQnswer}.  Rewrite tone should be ${reWriteFormToneSelect}, format should be ${reWriteFormFormatSelect.value} and length should be ${reWriteFormLengthSelect.value}`;
+
+    if (reWriteFormPrompt.value.trim() !== '') {
+        fullPrompt += ` Can you also include these details that I forgot to add in my resume too: ${reWriteFormPrompt.value.trim()}.`;
+    }
     const stream = await session.promptStreaming(fullPrompt);
 
     promptSummary.textContent = '';
@@ -105,9 +111,6 @@ async function createSummarizer(config, downloadProgressCallback) {
         throw new Error('AI Summarization is not supported in this browser');
     }
     const canSummarize = await window.ai.summarizer.capabilities();
-    if (canSummarize.available === 'no') {
-        throw new Error('AI Summarization is not supported');
-    }
     const summarizationSession = await self.ai.summarizer.create(
         config,
         downloadProgressCallback
@@ -118,6 +121,9 @@ async function createSummarizer(config, downloadProgressCallback) {
             downloadProgressCallback
         );
         await summarizationSession.ready;
+    }
+    if (canSummarize.available === 'no') {
+        throw new Error('AI Summarization is not supported');
     }
     return summarizationSession;
 }
@@ -133,7 +139,7 @@ document.getElementById('resumeUploadForm').addEventListener('submit', async (e)
     const container = document.querySelector('.container');
 
     // Show the spinner while waiting for the response
-    spinner.style.display = 'block';
+    spinnerGlobal2.style.display = 'block';
 
 
     const formData = new FormData();
@@ -187,11 +193,11 @@ document.getElementById('resumeUploadForm').addEventListener('submit', async (e)
         // container.appendChild(gemini)
 
     } catch (error) {
-        spinner.style.display = 'none';
+        spinnerGlobal2.style.display = 'none';
         console.error("Error:", error);
         gemini.innerHTML = '<p>An error occurred. Please try again later.</p>';
     }
-    spinner.style.display = 'none';
+    spinnerGlobal2.style.display = 'none';
     let tellMeWhyHireYouFromGemini = data.tellMeWhyHireYou;
     whyHire(tellMeWhyHireYouFromGemini);
 
@@ -260,3 +266,4 @@ function addColumnBox(key, value) {
     keyRestWrapper.appendChild(box2);
     return keyRestWrapper;
 }
+

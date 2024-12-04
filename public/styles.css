@@ -68,9 +68,14 @@ button:hover {
     background-color: #47a190; /* Deeper Mint Green */
 }
 
-#regenerateButton img {
+#regenerateButton {
+    text-align: center;
+}
+img.small-icon {
     width: 20px;
     height: 20px;
+    display: inline-block;
+    vertical-align: middle; /* Optional: Vertically aligns the image if needed */
 }
 
 .spinner {
@@ -105,30 +110,33 @@ button:hover {
     gap: 10px;
 }
 
-.box {
-    flex: 1;
-    background-color: #acd7d4; /* Soft Teal */
-    color: #333;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 0.9rem;
-    box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.1);
-}
-
 .keyWrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
     background-color: #56c1ab; /* Mint Green */
     border-radius: 8px;
     padding: 10px;
     color: white;
+    margin: 10px;
+    gap: 10px; /* Adds spacing between key and box */
 }
 
 .key1Container {
     font-weight: bold;
     font-size: 1rem;
+    text-align: left; /* Align key text to the left */
+}
+
+.box {
+    flex: 1;
+    background-color: #acd7d4; /* Soft Teal */
+    color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left; /* Align box text to the left */
+    font-size: 0.9rem;
+    box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .keyRestContainer {
@@ -140,6 +148,8 @@ button:hover {
 .dropdown-section {
     background-color: #acd7d4; /* Soft Teal */
     color: #333;
+    margin: 10px 30px 30px 30px;
+
 }
 
 dropdown-section label, dropdown-section select {
@@ -157,10 +167,47 @@ dropdown-section label, dropdown-section select {
     border: 1px solid #f7dc6f; /* Soft Gold Border */
     border-radius: 10px;
     padding: 15px;
+    margin: 15px;
     font-size: 1rem;
     color: #5d4037; /* Warm Brown */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     text-align: left;
     line-height: 1.5;
+}
+
+.prompt-box {
+    width: 100%;
+    height: 100px;
+    padding: 12px 15px;
+    border: 1px solid #d0e7ef; /* Soft Blue Border */
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #f5fbfd; /* Very Light Blue */
+    color: #333; /* Dark Text for readability */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.prompt-box:focus {
+    outline: none;
+    border-color: #4a90e2; /* Cool Blue Focus */
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.5); /* Cool Blue Glow */
+}
+
+.prompt-box::placeholder {
+    color: #999; /* Light Gray Placeholder */
+    font-style: italic;
+}
+
+.prompt-summary{
+    flex: 1;
+    background-color: #acd7d4;
+    color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.9rem;
+    box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
